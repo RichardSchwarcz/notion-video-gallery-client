@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { Button } from '~/components/ui/button'
+import { URLs } from '~/url'
 
 export default function Home() {
   type Data = {
@@ -7,7 +8,9 @@ export default function Home() {
   }
 
   async function getSerus() {
-    const response = await fetch('http://localhost:8000/api/youtube/auth')
+    const isProduction = process.env.NODE_ENV === 'production'
+    const API_URL = isProduction ? URLs.auth.prod : URLs.auth.dev
+    const response = await fetch(API_URL)
     const data = (await response.json()) as Data
     const oauthURL = data.googleOAuthURL
     console.log(oauthURL)

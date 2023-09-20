@@ -1,6 +1,7 @@
 import { Button } from '~/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
+import { URLs } from '~/url'
 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
@@ -37,12 +38,12 @@ function App() {
   }
 
   async function getVideos() {
-    const response: Response = await fetch(
-      'http://localhost:8000/api/youtube/videos',
-      {
-        credentials: 'include',
-      }
-    )
+    const isProduction = process.env.NODE_ENV === 'production'
+    const API_URL = isProduction ? URLs.videos.prod : URLs.videos.dev
+
+    const response: Response = await fetch(API_URL, {
+      credentials: 'include',
+    })
     if (response.ok) {
       const data = (await response.json()) as Data
       console.log(data)
