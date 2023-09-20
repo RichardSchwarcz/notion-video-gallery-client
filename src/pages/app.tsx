@@ -38,7 +38,7 @@ function App() {
         <p className="p-4 text-lg font-bold">Videos</p>
         {syncData.map((video) => {
           return (
-            <li key={video.etag} className="p-2">
+            <li key={video} className="p-2">
               {video.snippet.title}
             </li>
           )
