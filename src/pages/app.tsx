@@ -17,6 +17,12 @@ function App() {
     setSyncData(data.videos.items)
     setIsLoading(false)
   }
+  type video = {
+    etag: string
+    snippet: {
+      title: string
+    }
+  }
 
   console.log(syncData)
   return (
@@ -36,9 +42,9 @@ function App() {
       </div>
       <div className="m-8 border bg-card shadow-sm  rounded-lg">
         <p className="p-4 text-lg font-bold">Videos</p>
-        {syncData.map((video) => {
+        {syncData.map((video: video) => {
           return (
-            <li key={video} className="p-2">
+            <li key={video.etag} className="p-2">
               {video.snippet.title}
             </li>
           )
