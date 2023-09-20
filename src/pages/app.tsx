@@ -4,19 +4,52 @@ import { useState } from 'react'
 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
-  const [syncData, setSyncData] = useState([])
+  const [syncData, setSyncData] = useState<VideoItem[]>([])
+
+  type VideoItem = {
+    etag: string
+    id: string
+    kind: string
+    snippet: {
+      channelId: string
+      channelTitle: string
+      description: string
+      playlistId: string
+      position: number
+      publishedAt: string
+      resourceId: {
+        kind: string
+        videoId: string
+      }
+      thumbnails: {
+        default: { url: string; width: number; height: number }
+      }
+      title: string
+      videoOwnerChannelId: string
+      videoOwnerChannelTitle: string
+    }
+  }
+
+  type Data = {
+    videos: {
+      items: VideoItem[]
+    }
+  }
 
   async function getVideos() {
-    setIsLoading(true)
-    const response = await fetch('http://localhost:8000/api/youtube/videos', {
-      credentials: 'include',
-    })
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const data = await response.json()
-    console.log(data)
-    setSyncData(data.videos.items)
-    setIsLoading(false)
+    const response: Response = await fetch(
+      'http://localhost:8000/api/youtube/videos',
+      {
+        credentials: 'include',
+      }
+    )
+    if (response.ok) {
+      const data: Data = (await response.json()) as Data
+      console.log(data)
+      setSyncData(data.videos.items)
+    }
   }
+
   type video = {
     etag: string
     snippet: {
@@ -30,7 +63,22 @@ function App() {
       <div className="m-8 border bg-card shadow-sm  rounded-lg">
         <div className="p-4">
           {!isLoading && (
-            <Button onClick={getVideos}>get youtube videos</Button>
+            <Button
+              onClick={() => {
+                setIsLoading(true)
+
+                getVideos()
+                  .then(() => {
+                    setIsLoading(false)
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error)
+                    setIsLoading(false)
+                  })
+              }}
+            >
+              get youtube videos
+            </Button>
           )}
           {isLoading && (
             <Button disabled>
