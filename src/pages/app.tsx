@@ -44,7 +44,7 @@ function App() {
       }
     )
     if (response.ok) {
-      const data: Data = (await response.json()) as Data
+      const data = (await response.json()) as Data
       console.log(data)
       setSyncData(data.videos.items)
     }

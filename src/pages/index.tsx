@@ -2,9 +2,13 @@ import Head from 'next/head'
 import { Button } from '~/components/ui/button'
 
 export default function Home() {
+  type Data = {
+    googleOAuthURL: string
+  }
+
   async function getSerus() {
     const response = await fetch('http://localhost:8000/api/youtube/auth')
-    const data = await response.json()
+    const data = (await response.json()) as Data
     const oauthURL = data.googleOAuthURL
     console.log(oauthURL)
   }
@@ -19,7 +23,17 @@ export default function Home() {
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           Serus
         </div>
-        <Button onClick={getSerus}>Authenitcate</Button>
+        <Button
+          onClick={() => {
+            getSerus()
+              .then(() => {
+                console.log('auth')
+              })
+              .catch((error) => console.error(error))
+          }}
+        >
+          Authenitcate
+        </Button>
       </main>
     </>
   )
