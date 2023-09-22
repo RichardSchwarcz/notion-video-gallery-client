@@ -43,9 +43,9 @@ function App() {
     const response: Response = await fetch(API_URL, {
       method: 'GET',
       credentials: 'include',
-      headers: {
-        'Access-Control-Allow-Credentials': 'true',
-      },
+      // headers: {
+      //   'Access-Control-Allow-Credentials': 'true',
+      // },
     })
     if (response.ok) {
       const data = (await response.json()) as Data
