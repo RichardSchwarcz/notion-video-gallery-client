@@ -17,14 +17,19 @@ const config = {
     locales: ['en'],
     defaultLocale: 'en',
   },
-  headers: () => {
-    const headers = [
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async headers() {
+    return [
       {
-        key: 'Access-Control-Allow-Credentials',
-        value: 'true',
+        source: '/app',
+        headers: [
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true',
+          },
+        ],
       },
     ]
-    return headers
   },
 }
 
