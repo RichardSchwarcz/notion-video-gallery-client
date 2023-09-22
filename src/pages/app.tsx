@@ -41,10 +41,11 @@ function App() {
     const isProduction = process.env.NODE_ENV === 'production'
     const API_URL = isProduction ? URLs.videos.prod : URLs.videos.dev
     const response: Response = await fetch(API_URL, {
+      method: 'GET',
       credentials: 'include',
-      headers: {
-        'Access-Control-Allow-Credentials': 'true',
-      },
+      // headers: {
+      //   'Access-Control-Allow-Credentials': 'true',
+      // },
     })
     if (response.ok) {
       const data = (await response.json()) as Data
