@@ -1,20 +1,20 @@
+import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { UserAuthForm } from '~/components/user-auth-form'
 import { URLs } from '~/url'
 
 export default function AuthenticationPage() {
-  type Data = {
-    googleOAuthURL: string
-  }
+  const { isLoading, error, data } = useQuery<{ googleOAuthURL: string }>({
+    queryKey: ['authLink'],
+    queryFn: async () => {
+      const isProduction = process.env.NODE_ENV === 'production'
+      const API_URL = isProduction ? URLs.auth.prod : URLs.auth.dev
+      return fetch(API_URL).then((res) => res.json())
+    },
+  })
 
-  async function getGoogleOAuthLink() {
-    const isProduction = process.env.NODE_ENV === 'production'
-    const API_URL = isProduction ? URLs.auth.prod : URLs.auth.dev
-    const response = await fetch(API_URL)
-    const data = (await response.json()) as Data
-    return data.googleOAuthURL
-  }
+  console.log(data)
 
   return (
     <>
