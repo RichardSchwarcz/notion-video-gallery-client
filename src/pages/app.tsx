@@ -2,34 +2,11 @@ import { Button } from '~/components/ui/button'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { URLs } from '~/url'
+import type { VideoItem } from '~/types'
 
 function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [syncData, setSyncData] = useState<VideoItem[]>([])
-
-  type VideoItem = {
-    etag: string
-    id: string
-    kind: string
-    snippet: {
-      channelId: string
-      channelTitle: string
-      description: string
-      playlistId: string
-      position: number
-      publishedAt: string
-      resourceId: {
-        kind: string
-        videoId: string
-      }
-      thumbnails: {
-        default: { url: string; width: number; height: number }
-      }
-      title: string
-      videoOwnerChannelId: string
-      videoOwnerChannelTitle: string
-    }
-  }
 
   type Data = {
     videos: {
@@ -43,9 +20,6 @@ function App() {
     const response: Response = await fetch(API_URL, {
       method: 'GET',
       credentials: 'include',
-      // headers: {
-      //   'Access-Control-Allow-Credentials': 'true',
-      // },
     })
     if (response.ok) {
       const data = (await response.json()) as Data
@@ -61,7 +35,6 @@ function App() {
     }
   }
 
-  console.log(syncData)
   return (
     <div>
       <div className="m-8 border bg-card shadow-sm  rounded-lg">
