@@ -17,23 +17,6 @@ const config = {
     locales: ['en'],
     defaultLocale: 'en',
   },
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async headers() {
-    return [
-      {
-        source: '/app',
-
-        headers: [
-          {
-            // key: 'Access-Control-Allow-Credentials',
-            // value: 'true',
-            key: 'x-authorized',
-            value: ':authorized',
-          },
-        ],
-      },
-    ]
-  },
 }
 
 export default config
