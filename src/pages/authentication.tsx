@@ -1,21 +1,22 @@
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { buttonVariants } from '~/components/ui/button'
+import { getGoogleOAuthURL } from '~/getGoogleOAuthURL'
 import { cn } from '~/lib/utils'
 
 import { URLs } from '~/url'
 
 export default function AuthenticationPage() {
-  const { isLoading, error, data } = useQuery<{ googleOAuthURL: string }>({
-    queryKey: ['authLink'],
-    queryFn: async () => {
-      const isProduction = process.env.NODE_ENV === 'production'
-      const API_URL = isProduction ? URLs.auth.prod : URLs.auth.dev
-      return fetch(API_URL).then((res) => res.json())
-    },
-  })
+  // const { isLoading, error, data } = useQuery<{ googleOAuthURL: string }>({
+  //   queryKey: ['authLink'],
+  //   queryFn: async () => {
+  //     const isProduction = process.env.NODE_ENV === 'production'
+  //     const API_URL = isProduction ? URLs.auth.prod : URLs.auth.dev
+  //     return fetch(API_URL).then((res) => res.json())
+  //   },
+  // })
 
-  console.log(data)
+  // console.log(data)
 
   return (
     <>
@@ -45,7 +46,7 @@ export default function AuthenticationPage() {
                 Create an account
               </h1>
             </div>
-
+            {/* 
             {data && (
               <Link
                 href={data?.googleOAuthURL}
@@ -53,7 +54,14 @@ export default function AuthenticationPage() {
               >
                 Sign in with Google
               </Link>
-            )}
+            )} */}
+
+            <Link
+              href={getGoogleOAuthURL()}
+              className={cn(buttonVariants({ variant: 'default' }))}
+            >
+              Sign in with Google
+            </Link>
 
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{' '}
