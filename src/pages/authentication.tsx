@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
+// import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { buttonVariants } from '~/components/ui/button'
 import { getGoogleOAuthURL } from '~/getGoogleOAuthURL'
 import { cn } from '~/lib/utils'
 
-import { URLs } from '~/url'
+// import { URLs } from '~/url'
 
 export default function AuthenticationPage() {
   // const { isLoading, error, data } = useQuery<{ googleOAuthURL: string }>({
