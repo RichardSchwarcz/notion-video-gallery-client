@@ -28,6 +28,15 @@ function App() {
     }
   }
 
+  async function getTestcookie() {
+    await fetch(
+      `http://localhost:8000/api/youtube/auth/redirect${window.location.search}`,
+      {
+        credentials: 'include',
+      }
+    )
+  }
+
   type video = {
     etag: string
     snippet: {
@@ -65,6 +74,21 @@ function App() {
           )}
         </div>
       </div>
+
+      <Button
+        onClick={() => {
+          getTestcookie()
+            .then(() => {
+              console.log('cookie set')
+            })
+            .catch((e) => {
+              console.error(e)
+            })
+        }}
+      >
+        Test me
+      </Button>
+
       <div className="m-8 border bg-card shadow-sm  rounded-lg">
         <p className="p-4 text-lg font-bold">Videos</p>
         {syncData.map((video: video) => {
