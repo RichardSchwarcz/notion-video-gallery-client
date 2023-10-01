@@ -31,13 +31,9 @@ function App() {
   async function getTestcookie() {
     const isProduction = process.env.NODE_ENV === 'production'
     const API_URL = isProduction ? URLs.redirect.prod : URLs.redirect.dev
-    await fetch(
-      // `http://localhost:8000/api/youtube/auth/redirect${window.location.search}`,
-      API_URL + window.location.search,
-      {
-        credentials: 'include',
-      }
-    )
+    await fetch(API_URL + window.location.search, {
+      credentials: 'include',
+    })
   }
 
   type video = {
