@@ -28,14 +28,6 @@ function App() {
     }
   }
 
-  async function getTestcookie() {
-    const isProduction = process.env.NODE_ENV === 'production'
-    const API_URL = isProduction ? URLs.redirect.prod : URLs.redirect.dev
-    await fetch(API_URL + window.location.search, {
-      credentials: 'include',
-    })
-  }
-
   type video = {
     etag: string
     snippet: {
@@ -73,20 +65,6 @@ function App() {
           )}
         </div>
       </div>
-
-      <Button
-        onClick={() => {
-          getTestcookie()
-            .then(() => {
-              console.log('cookie set')
-            })
-            .catch((e) => {
-              console.error(e)
-            })
-        }}
-      >
-        Test me
-      </Button>
 
       <div className="m-8 border bg-card shadow-sm  rounded-lg">
         <p className="p-4 text-lg font-bold">Videos</p>
